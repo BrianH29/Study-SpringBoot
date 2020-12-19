@@ -42,13 +42,12 @@ public class JdbcMemberRepository implements MemberRepository{
             } else {
                 throw new SQLException("id 조회 실패");
             }
-            return member; 
+            return member;
         } catch (Exception e) {
             throw new IllegalStateException(e);
         } finally {
             close(conn,pstmt,rs);
         }
-
     }
 
     @Override
@@ -79,6 +78,7 @@ public class JdbcMemberRepository implements MemberRepository{
         } finally {
             close(conn,pstmt,rs);
         }
+
     }
 
     @Override
@@ -93,6 +93,7 @@ public class JdbcMemberRepository implements MemberRepository{
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+        List<Member> members = new ArrayList<>();
 
         try {
             conn = getConnection();
@@ -100,14 +101,13 @@ public class JdbcMemberRepository implements MemberRepository{
 
             rs = pstmt.executeQuery();
 
-            List<Member> members = new ArrayList<>();
             while(rs.next()){
                 Member member = new Member();
                 member.setId(rs.getLong("id"));
                 member.setName(rs.getString("name"));
                 members.add(member);
             }
-            return members;
+             return members;
 
         } catch (Exception e) {
             throw new IllegalStateException(e);

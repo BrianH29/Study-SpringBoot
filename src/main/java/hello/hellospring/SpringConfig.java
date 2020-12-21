@@ -1,5 +1,6 @@
 package hello.hellospring;
 
+import hello.hellospring.aop.TimeTraceAop;
 import hello.hellospring.repository.JdbcMemberRepository;
 import hello.hellospring.repository.JdbcTemplateMemberRepository;
 import hello.hellospring.repository.JpaMemberRepository;
@@ -24,18 +25,29 @@ public class SpringConfig {
         this.dataSource = dataSource;
     }
 */
-
+/*
+    //jpa 활용
     private final EntityManager em;
 
     public SpringConfig(EntityManager em) {
         this.em = em;
     }
+*/
+    private final MemberRepository mr;
 
+    public SpringConfig(MemberRepository mr) {
+        this.mr = mr;
+    }
+
+    @Bean
+    public MemberService memberService(){
+        return new MemberService(mr);
+    }
+/*
     @Bean
     public MemberService memberService(){
         return new MemberService(memberRepository());
     }
-
     @Bean
     public MemberRepository memberRepository(){
         //return new MemoryMemberRepository();
@@ -43,4 +55,6 @@ public class SpringConfig {
         //return new JdbcTemplateMemberRepository()
         return new JpaMemberRepository(em);
     }
+*/
+
 }
